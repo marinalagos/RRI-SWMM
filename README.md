@@ -9,6 +9,7 @@ You will need two input files:
 2. **RRI raster:** One of the topografy `.asc` files from the RRI model.
 
 > **⚠️ Important:** Both files must use the **same projected coordinate system** with units in **meters**.
+
 > **Note:** You can find example input files in the `node2cell` directory: `NodeXY.txt` (for SWMM coordinates) and `dem.asc` (for RRI raster).
 
 ### usage
