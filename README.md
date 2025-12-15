@@ -8,7 +8,7 @@ You will need two input files:
 1. **SWMM Coordinates:** A file containing the coordinates of the SWMM nodes.
 2. **RRI raster:** One of the topografy `.asc` files from the RRI model.
 
-> **Note:** You can find example input files in the `node2cell` directory: `NodeXY.txt` (for coordinates) and `dem.asc` (for RRI raster).
+> **Note:** You can find example input files in the `node2cell` directory: `NodeXY.txt` (for SWMM coordinates) and `dem.asc` (for RRI raster).
 
 ### usage
 1. Open `set_node2cell.txt` and specify the paths/names of the two input files described above.
