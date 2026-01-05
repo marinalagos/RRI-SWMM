@@ -13,6 +13,8 @@ time_step = '10min' # RRI input file must match with this (e.g., time_step='10m'
 time_step_seconds = pd.Timedelta(time_step).seconds
 
 hist_path = Path('./HIST')
+out_path = hist_path / 'out'
+out_path.mkdir(parents=True, exist_ok=True)
 
 SWMM_model_path = Path('./SWMM_model/')
 SWMM_model_name = 'model'
@@ -20,6 +22,8 @@ SWMM_model_name = 'model'
 RRI_model_path = Path('./RRI_model/')
 RRI_DEM_path = Path('./RRI_model/input_files/DEM.asc')
 RRI_soil_depth_path = Path('./RRI_model/input_files/landuse_da.asc')
+out_path = RRI_model_path / 'out'
+out_path.mkdir(parents=True, exist_ok=True)
 
 # PREPARATION
 
