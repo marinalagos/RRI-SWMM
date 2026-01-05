@@ -16,3 +16,9 @@ You will need two input files:
 1. Open `set_node2cell.txt` and specify the paths/names of the two input files described above.
 2. Run the executable:`node2cell.exe`
 3. A new file named `node_ij.txt` will be generated containing the final mapping results.
+
+## Python environment
+
+2. Create the environment: `python -m venv .venv`
+3. Activate it: `source .venv/bin/activate`
+4. Install packages: `pip install -r requirements.txt`
