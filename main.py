@@ -34,6 +34,7 @@ sim = Simulation(str(SWMM_model_path.joinpath(SWMM_model_name + '.inp')),
 
 sim.step_advance(time_step_seconds)
 
+# Create initial conditions files
 nrows, ncols, cells_size, hs = read_ascii_raster_no_data(RRI_DEM_path)
 write_hs_grid(hs, out_file=RRI_model_path.joinpath('out','gampt_ff_000001.out'), nodata_value=-0.10000)
 write_hs_grid(hs, out_file=RRI_model_path.joinpath('out','hs_000001.out'), nodata_value=-0.10000)
@@ -46,7 +47,7 @@ write_hs_grid(hs, out_file=RRI_model_path.joinpath('out','qr_000001.out'), nodat
 
 cell_surface_area = cells_size**2 # in m²
 
-cells_idxs = pd.read_csv('node_ij_v03.txt', index_col=0, sep='\s+', engine='python', names=['i', 'j'], skiprows=1) # Qin san's file with some changes on the header
+cells_idxs = pd.read_csv('node2cell/node_ij.txt', index_col=0, sep='\s+', engine='python', names=['i', 'j'], skiprows=1) # Qin san's file with some changes on the header
 # Invert the i(y) index. This files enumerates the rows from bottom to top, but later numpy will access array elements enumarating the rows from top to bottom.
 cells_idxs.i = nrows - cells_idxs.i + 1
 
