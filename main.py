@@ -14,15 +14,14 @@ import numpy as np
 time_step = '10min' # RRI input file must match with this (e.g., time_step='10m' -> lasth = 0.166667, outnum = 1)
 time_step_seconds = pd.Timedelta(time_step).seconds
 
-run_path = Path('C:/Users/lagos/Documents/00_INA/01_SSD/00_PREVENIR/09_Japon_2025/00_ICHARM/08_Coupled_model_para_git/RRI_RUN')
-hist_path = Path('C:/Users/lagos/Documents/00_INA/01_SSD/00_PREVENIR/09_Japon_2025/00_ICHARM/08_Coupled_model_para_git/HIST')
+hist_path = Path('./HIST')
 
-SWMM_model_path = Path('/SWMM_model/')
+SWMM_model_path = Path('./SWMM_model/')
 SWMM_model_name = 'model'
 
-RRI_model_path = Path('/RRI_model/')
-RRI_DEM_path = Path('C:/Users/lagos/Documents/00_INA/01_SSD/00_PREVENIR/09_Japon_2025/00_ICHARM/08_Coupled_model_para_git/RRI_model/topo/new_methodology_filled/IDW_NN_dtm_12_01_filled_manual_gauss_075-3_mod2.asc')
-RRI_soil_depth_path = Path('C:/Users/lagos/Documents/00_INA/01_SSD/00_PREVENIR/09_Japon_2025/00_ICHARM/08_Coupled_model_para_git/RRI_model/topo/landuse_da.asc')
+RRI_model_path = Path('./RRI_model/')
+RRI_DEM_path = Path('./RRI_model/input_files/DEM.asc')
+RRI_soil_depth_path = Path('./RRI_model/input_files/landuse_da.asc')
 
 # PREPARATION
 
@@ -34,10 +33,10 @@ sim = Simulation(str(SWMM_model_path.joinpath(SWMM_model_name + '.inp')),
 sim.step_advance(time_step_seconds)
 
 nrows, ncols, cells_size, hs = read_ascii_raster_no_data(RRI_DEM_path)
-write_hs_grid(hs, out_file=run_path.joinpath('out','gampt_ff_000001.out'), nodata_value=-0.10000)
-write_hs_grid(hs, out_file=run_path.joinpath('out','hs_000001.out'), nodata_value=-0.10000)
-write_hs_grid(hs, out_file=run_path.joinpath('out','hr_000001.out'), nodata_value=-0.10000)
-write_hs_grid(hs, out_file=run_path.joinpath('out','qr_000001.out'), nodata_value=-0.10000)
+write_hs_grid(hs, out_file=RRI_model_path.joinpath('out','gampt_ff_000001.out'), nodata_value=-0.10000)
+write_hs_grid(hs, out_file=RRI_model_path.joinpath('out','hs_000001.out'), nodata_value=-0.10000)
+write_hs_grid(hs, out_file=RRI_model_path.joinpath('out','hr_000001.out'), nodata_value=-0.10000)
+write_hs_grid(hs, out_file=RRI_model_path.joinpath('out','qr_000001.out'), nodata_value=-0.10000)
 
 # nrows = 276
 # ncols = 136
@@ -94,17 +93,17 @@ for step in sim:
     #-----------------#
 
     # copy rainfall file
-    # shutil.copy2(RRI_model_path.joinpath('rain', f'PREC_{current_sim_time:%Y%m%d_%H%M}.txt'), run_path.joinpath('rain', 'P.txt'))
+    # shutil.copy2(RRI_model_path.joinpath('rain', f'PREC_{current_sim_time:%Y%m%d_%H%M}.txt'), RRI_model_path.joinpath('rain', 'P.txt'))
     rainfall_file = RRI_model_path.joinpath('rain', f'PREC_{current_sim_time.replace(minute=(current_sim_time.minute//10)*10, second=0, microsecond=0):%Y%m%d_%H%M}.txt')
     if rainfall_file.is_file():
-        shutil.copy2(rainfall_file, run_path.joinpath('rain', 'P.txt'))
+        shutil.copy2(rainfall_file, RRI_model_path.joinpath('rain', 'P.txt'))
     else:
         print('Rainfall file not found. Last file is used instead')
     # print(f'mean rainfall (file average): {read_hs_grid("RRI_RUN/rain/P.txt", skiprows=1).mean()} mm/h')
     # run the model
     try:
-        proc = subprocess.run(str(run_path.joinpath('0_rri_1_4_2_7.exe')), 
-                                  cwd = run_path, 
+        proc = subprocess.run(str(RRI_model_path.joinpath('0_rri_1_4_2_7.exe')), 
+                                  cwd = RRI_model_path, 
                                   stdout=subprocess.DEVNULL,
                                   stderr=subprocess.DEVNULL,
                                 #   capture_output = True,
@@ -116,17 +115,17 @@ for step in sim:
         print(f"TimeoutExpired: {e}")
 
     # save the results in HIST directory
-    shutil.copy2(run_path.joinpath('out','gampt_ff_000001.out'), hist_path.joinpath('out', f'gampt_ff_{i:06d}.out'))
-    shutil.copy2(run_path.joinpath('out','hs_000001.out'), hist_path.joinpath('out', f'hs_{i:06d}.out'))
-    shutil.copy2(run_path.joinpath('out','hr_000001.out'), hist_path.joinpath('out', f'hr_{i:06d}.out'))
-    shutil.copy2(run_path.joinpath('out','qr_000001.out'), hist_path.joinpath('out', f'qr_{i:06d}.out'))
+    shutil.copy2(RRI_model_path.joinpath('out','gampt_ff_000001.out'), hist_path.joinpath('out', f'gampt_ff_{i:06d}.out'))
+    shutil.copy2(RRI_model_path.joinpath('out','hs_000001.out'), hist_path.joinpath('out', f'hs_{i:06d}.out'))
+    shutil.copy2(RRI_model_path.joinpath('out','hr_000001.out'), hist_path.joinpath('out', f'hr_{i:06d}.out'))
+    shutil.copy2(RRI_model_path.joinpath('out','qr_000001.out'), hist_path.joinpath('out', f'qr_{i:06d}.out'))
 
     #-----------------#
     #  FLOW EXCHANGE  #
     #-----------------#
 
     hs_vector = get_hs_vector(cells_idxs=cells_idxs, 
-                              hs_file=run_path.joinpath('out','hs_000001.out'), #hs_grid = hs, #(hs - soil_depth_grid).clip(0), 
+                              hs_file=RRI_model_path.joinpath('out','hs_000001.out'), #hs_grid = hs, #(hs - soil_depth_grid).clip(0), 
                               nodata_threshold=0.0)
         
     if hs_vector.isna().sum() > 0:
@@ -147,10 +146,10 @@ for step in sim:
 
     # print(f'MAX inflow: {pd.Series(node_inflows).max():.3f} m³/s - MAX outflow: {pd.Series(node_inflows).min():.3f} m³/s')
 
-    hs, neg_volume = update_hs_raster(hs_file_1 = run_path.joinpath('out','hs_000001.out'), #hs_grid_1 = hs, #
+    hs, neg_volume = update_hs_raster(hs_file_1 = RRI_model_path.joinpath('out','hs_000001.out'), #hs_grid_1 = hs, #
                                       inflows = pd.Series(node_inflows),
                                       cells_idxs = cells_idxs,
-                                      hs_file_2 = run_path.joinpath('out','hs_000001.out'),
+                                      hs_file_2 = RRI_model_path.joinpath('out','hs_000001.out'),
                                       time_delta = time_step_seconds,
                                       cell_surface_area = cell_surface_area,
                                       nodata_value = -0.10000
