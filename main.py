@@ -17,10 +17,10 @@ time_step_seconds = pd.Timedelta(time_step).seconds
 run_path = Path('C:/Users/lagos/Documents/00_INA/01_SSD/00_PREVENIR/09_Japon_2025/00_ICHARM/08_Coupled_model_para_git/RRI_RUN')
 hist_path = Path('C:/Users/lagos/Documents/00_INA/01_SSD/00_PREVENIR/09_Japon_2025/00_ICHARM/08_Coupled_model_para_git/HIST')
 
-SWMM_model_path = Path('C:/Users/lagos/Documents/00_INA/01_SSD/00_PREVENIR/09_Japon_2025/00_ICHARM/08_Coupled_model_para_git/SWMM_model_overflow')
-SWMM_model_name = 'network_model_v03_swmmfmt_over'
+SWMM_model_path = Path('/SWMM_model/')
+SWMM_model_name = 'model'
 
-RRI_model_path = Path('C:/Users/lagos/Documents/00_INA/01_SSD/00_PREVENIR/09_Japon_2025/00_ICHARM/08_Coupled_model_para_git/RRI_model')
+RRI_model_path = Path('/RRI_model/')
 RRI_DEM_path = Path('C:/Users/lagos/Documents/00_INA/01_SSD/00_PREVENIR/09_Japon_2025/00_ICHARM/08_Coupled_model_para_git/RRI_model/topo/new_methodology_filled/IDW_NN_dtm_12_01_filled_manual_gauss_075-3_mod2.asc')
 RRI_soil_depth_path = Path('C:/Users/lagos/Documents/00_INA/01_SSD/00_PREVENIR/09_Japon_2025/00_ICHARM/08_Coupled_model_para_git/RRI_model/topo/landuse_da.asc')
 

@@ -1,9 +1,9 @@
 RRI_Input_Format_Ver1_4_2
 SSD_v11
 ./rain/P.txt
-../RRI_model/topo/new_methodology_filled/IDW_NN_dtm_12_01_filled_manual_gauss_075-3_mod2.asc
-../RRI_model/topo/new_methodology_filled/ACC_IDW_NN_dtm_12_01_filled_manual_gauss_075-3_mod2.asc
-../RRI_model/topo/new_methodology_filled/DIR_IDW_NN_dtm_12_01_filled_manual_gauss_075-3_mod2_rrifmt.asc
+./input_files/DEM.asc
+./input_files/ACC.asc
+./input_files/DIR.asc
 
 1    # utm(1) or latlon(0)
 0    # 4-direction (0), 8-direction(1)
@@ -63,12 +63,12 @@ SSD_v11
 ./bound/qr_bound.txt
 
 1
-../RRI_model/topo/landuse_2.asc
+./input_files/landuse_class.asc
 
 0
 ./damcnt.txt
 
-1
+0
 ../RRI_model/div.txt
 
 0
