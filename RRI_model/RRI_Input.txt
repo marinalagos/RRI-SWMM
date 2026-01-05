@@ -1,0 +1,100 @@
+RRI_Input_Format_Ver1_4_2
+SSD_v11
+./rain/P.txt
+../RRI_model/topo/new_methodology_filled/IDW_NN_dtm_12_01_filled_manual_gauss_075-3_mod2.asc
+../RRI_model/topo/new_methodology_filled/ACC_IDW_NN_dtm_12_01_filled_manual_gauss_075-3_mod2.asc
+../RRI_model/topo/new_methodology_filled/DIR_IDW_NN_dtm_12_01_filled_manual_gauss_075-3_mod2_rrifmt.asc
+
+1    # utm(1) or latlon(0)
+0    # 4-direction (0), 8-direction(1)
+0.1667 # lasth(hour)
+600    # dt(second)
+60    # dt_riv
+1    # outnum [-]
+5645400.000000   # xllcorner_rain
+6136700.000000    # yllcorner_rain
+100.0000000000 100.0000000000    # cellsize_rain
+
+3.000d-2     # ns_river
+3    # num_of_landuse
+1   1   1    # diffusion(1) orr kinematic(0)
+1.500d-1   3.000d-1   2.000d-1     # ns_slope
+0.000d0   0.000d0   0.000d0     # soildepth
+0.000d0   0.000d0   0.000d0     # gammaa
+
+0.000d0   0.000d0   0.000d0     # ksv
+0.000d0   0.000d0   0.000d0     # faif
+
+0.000d0   0.000d0   0.000d0     # ka
+0.000d0   0.000d0   0.000d0     # gammam
+0.000d0   0.000d0   0.000d0     # beta
+
+0.000d0   0.000d0   0.000d0     # kgv
+0.000d0   0.000d0   0.000d0     # gammag
+0.000d0   0.000d0   0.000d0     # tg
+0.000d0   0.000d0   0.000d0     # fpg
+0.000d0   0.000d0   0.000d0     # init_cond_gw
+
+16000.0      # riv_thresh
+5.00d0      # width_param_c (2.5)
+3.50d-1      # width_param_s (0.4)
+9.50d-1      # depth_param_c (0.1)
+2.00d-1      # depth_param_s (0.4)
+0.00d0      # height_param
+20.0       # height_limit_param
+
+0 
+./riv/new_width.asc
+./riv/new_depth.asc
+./riv/new_height.asc
+
+1  1  0  1
+./out/hs_000001.out
+./out/hr_000001.out
+./out/hg_init.out
+./out/gampt_ff_000001.out
+
+0  0
+./bound/hs_wlev_bound.txt
+./bound/hr_wlev_bound.txt
+
+0  0
+./bound/qs_bound.txt
+./bound/qr_bound.txt
+
+1
+../RRI_model/topo/landuse_2.asc
+
+0
+./damcnt.txt
+
+1
+../RRI_model/div.txt
+
+0
+./rain/Evp.dat
+100.000000      # xllcorner_evp
+10.000000      # yllcorner_evp
+0.0083333333  0.0083333333     # cellsize
+
+0
+./riv/length.txt
+
+0
+./riv/sec_map.txt
+./riv/section/sec_
+
+1  1  0  1  0  0  0  0  1  1
+./out/hs_
+./out/hr_
+./out/hg_
+./out/qr_
+./out/qu_
+./out/qv_
+./out/gu_
+./out/gv_
+./out/gampt_ff_
+./out/storage.dat
+
+0
+./location.txt
