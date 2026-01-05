@@ -376,10 +376,11 @@ def read_ascii_raster_no_data(filepath):
     Reads an ASCII raster (.asc) file and returns raster metadata and the empty (zero) array keeping the no data positions.
     
     Returns:
-        nrows (int): Number of rows in the raster
-        ncols (int): Number of columns in the raster
-        cell_size (float): Cell size of the raster grid
-        data (np.ndarray): Array with np.nan in NODATA locations and 0 elsewhere
+        tuple: A tuple containing the following elements:
+            - rows (int): Number of rows in the raster.
+            - cols (int): Number of columns in the raster.
+            - cell_size (float): Cell size of the raster grid.
+            - data (np.ndarray): Array with ``np.nan`` in NODATA locations and 0 elsewhere.        
     """
     header_keys = ["ncols", "nrows", "xllcorner", "yllcorner", "cellsize", "NODATA_value"]
     header_values = {}
