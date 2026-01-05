@@ -1,3 +1,6 @@
+HIST/out/
+RRI_model/out/
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[codz]
