@@ -1,2 +1,2 @@
 NodeXY.txt #input file of node coordinates
-dem.asc #input file of the basin map in cell format
+DEM.asc #input file of the basin map in cell format
