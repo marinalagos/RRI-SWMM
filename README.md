@@ -6,7 +6,7 @@ Before coupling the models, every SWMM node must be mapped to an RRI cell. This 
 ### Requirements
 You will need two input files:
 1. **SWMM Coordinates:** A file containing the coordinates of the SWMM nodes.
-2. **RRI raster:** One of the topografy `.asc` files from the RRI model.
+2. **RRI raster:** One of the topography `.asc` files from the RRI model.
 
 > **⚠️ Important:** Both files must use the **same projected coordinate system** with units in **meters**.
 
