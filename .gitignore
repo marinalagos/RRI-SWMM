@@ -3,6 +3,7 @@ RRI_model/out/
 RRI_model/rain/P.txt
 SWMM_model/model.out
 SWMM_model/model.rpt
+swmm524_engine
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
