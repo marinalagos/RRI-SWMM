@@ -181,6 +181,7 @@ for step in sim:
 
     proc = subprocess.Popen(
         str(RRI_model_path / "0_rri_1_4_2_7.exe"),
+        # str((RRI_model_path / "0_rri_1_4_2_7").resolve()), # for linux
         cwd=RRI_model_path,
         stdout=stdout_target,
         stderr=stderr_target,
