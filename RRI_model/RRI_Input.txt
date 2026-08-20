@@ -35,13 +35,13 @@ SSD_v11
 0.000d0   0.000d0   0.000d0     # fpg
 0.000d0   0.000d0   0.000d0     # init_cond_gw
 
-16000.0      # riv_thresh
+16000      # riv_thresh
 5.00d0      # width_param_c (2.5)
 3.50d-1      # width_param_s (0.4)
 9.50d-1      # depth_param_c (0.1)
 2.00d-1      # depth_param_s (0.4)
 0.00d0      # height_param
-20.0       # height_limit_param
+20       # height_limit_param
 
 0 
 ./riv/new_width.asc
