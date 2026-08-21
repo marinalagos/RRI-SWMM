@@ -1,5 +1,6 @@
 from helper_functions import get_associated_lengths, get_hs_vector, compute_nodes_inflows, update_hs_raster, read_ascii_raster_no_data, write_hs_grid, read_hs_grid
 from pathlib import Path
+import platform
 import pandas as pd
 import shutil
 import subprocess
@@ -20,6 +21,7 @@ SWMM_model_path = Path('./SWMM_model/')
 SWMM_model_name = 'model'
 
 RRI_model_path = Path('./RRI_model/')
+RRI_exe_name = '0_rri_1_4_2_7.exe' if platform.system() == 'Windows' else '0_rri_1_4_2_7'
 RRI_DEM_path = Path('./RRI_model/input_files/DEM.asc')
 RRI_soil_depth_path = Path('./RRI_model/input_files/landuse_da.asc')
 out_path = RRI_model_path / 'out'
@@ -159,7 +161,7 @@ for step in sim:
     # run the model
 
     proc = subprocess.Popen(
-        str(RRI_model_path / "0_rri_1_4_2_7.exe"),
+        str((RRI_model_path / RRI_exe_name).resolve()),
         cwd=RRI_model_path,
         stdout=subprocess.DEVNULL,
         stderr=subprocess.DEVNULL,
