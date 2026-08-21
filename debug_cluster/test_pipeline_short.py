@@ -1,5 +1,8 @@
-from helper_functions import get_associated_lengths, get_hs_vector, compute_nodes_inflows, update_hs_raster, read_ascii_raster_no_data, write_hs_grid, read_hs_grid
+import sys
 from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent))  # repo root, para poder importar helper_functions
+
+from helper_functions import get_associated_lengths, get_hs_vector, compute_nodes_inflows, update_hs_raster, read_ascii_raster_no_data, write_hs_grid, read_hs_grid
 import pandas as pd
 import shutil
 import subprocess
