@@ -513,12 +513,18 @@ open( 11, file = rainfile, status = 'old' )
 tt = 0
 do
  read(11, *, iostat = ios) t, nx_rain, ny_rain
+ if(mod(tt,50).eq.0) then
+  write(*,*) "diag rain-count loop: tt=", tt, "ios(header)=", ios, "nx_rain=", nx_rain, "ny_rain=", ny_rain
+  call flush(6)
+ endif
  do i = 1, ny_rain
   read(11, *, iostat = ios) (rdummy, j = 1, nx_rain)
  enddo
  if( ios.lt.0 ) exit
  tt = tt + 1
 enddo
+write(*,*) "diag checkpoint: exited rain-count loop, tt=", tt, "ios=", ios
+call flush(6)
 tt_max_rain = tt - 1
 
 allocate( t_rain(0:tt_max_rain), qp(0:tt_max_rain, ny_rain, nx_rain), qp_t(ny, nx) )
