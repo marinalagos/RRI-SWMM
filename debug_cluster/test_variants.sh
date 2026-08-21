@@ -2,8 +2,6 @@
 # Correr esto DESDE la raiz del repo en el cluster (donde estan main.py, RRI_model/, etc.)
 # despues de haber corrido build_variants.sh. Prueba cada binario contra el escenario
 # exacto que cuelga: primer paso, condiciones iniciales en seco.
-set -e
-
 BUILD_DIR="RRI_source/1.4.2.7-20260121T122640Z-3-001/1.4.2.7"
 TIMEOUT_S=300
 
@@ -41,13 +39,12 @@ PYEOF
 
   echo "=== Testing $NAME ==="
   cd "$TESTDIR"
-  START=$(date +%s.%N)
+  SECONDS=0
   timeout ${TIMEOUT_S}s ./0_rri_1_4_2_7 > stdout.log 2>&1
   RC=$?
-  END=$(date +%s.%N)
+  ELAPSED=$SECONDS
   cd - > /dev/null
 
-  ELAPSED=$(echo "$END - $START" | bc)
   if [ "$RC" -eq 124 ]; then
     echo "$NAME: TIMEOUT despues de ${TIMEOUT_S}s (cuelga, igual que el binario actual)"
   elif [ "$RC" -eq 0 ]; then
