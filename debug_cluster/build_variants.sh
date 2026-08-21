@@ -24,13 +24,19 @@ build_variant () {
   echo "-> built ./$NAME"
 }
 
+# -ffree-line-length-none: gfortran por default corta las lineas en free-form a 132
+# columnas; RRI_GW.f90 tiene una directiva !$omp con una lista de variables mas larga
+# que eso. ifort no tiene ese limite tan estricto. No cambia nada numerico, solo permite
+# parsear el archivo.
+COMMON="-ffree-line-length-none -fopenmp"
+
 # Variante 1: igual al binario actual, mismos flags "tipicos" agresivos (equivalente al -O3 del .bat de Windows)
-build_variant 0_rri_test_O3        -O3 -fopenmp
+build_variant 0_rri_test_O3        -O3 $COMMON
 
 # Variante 2: optimizacion conservadora, sin fusion de operaciones ni fast-math (mas parecido al comportamiento IEEE estricto de ifort sin /fp:fast)
-build_variant 0_rri_test_strict    -O2 -fopenmp -fno-fast-math -ffp-contract=off -frounding-math
+build_variant 0_rri_test_strict    -O2 $COMMON -fno-fast-math -ffp-contract=off -frounding-math
 
 # Variante 3: sin optimizacion alguna (el mas "literal" posible)
-build_variant 0_rri_test_O0        -O0 -fopenmp
+build_variant 0_rri_test_O0        -O0 $COMMON
 
 echo "Listo. Binarios: 0_rri_test_O3, 0_rri_test_strict, 0_rri_test_O0"

@@ -1198,7 +1198,7 @@ i = ny, 1, -1)
   call storage_calc(hs, hr, hg, ss, sr, si, sg)
   write(*, '(6e15.3)') rain_sum, pevp_sum, aevp_sum, sout, ss + sr + si + sg, &
 (rain_sum - aevp_sum - sout - (ss + sr + si + sg) + sinit)
-  (1000, '(1000e15.7)') rain_sum, pevp_sum, aevp_sum, sout, ss + sr + si + sg, &
+  write(1000, '(1000e15.7)') rain_sum, pevp_sum, aevp_sum, sout, ss + sr + si + sg, &
 (rain_sum - aevp_sum - sout - (ss + sr + si + sg) + sinit), ss, sr, si, sg
  endif
 
