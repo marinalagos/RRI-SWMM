@@ -520,7 +520,7 @@ do
  do i = 1, ny_rain
   read(11, *, iostat = ios) (rdummy, j = 1, nx_rain)
  enddo
- if( ios.lt.0 ) exit
+ if( ios.ne.0 ) exit ! modified: gfortran 4.8.5 can return a positive iostat (not just negative/EOF) at true end-of-file for this list-directed read
  tt = tt + 1
 enddo
 write(*,*) "diag checkpoint: exited rain-count loop, tt=", tt, "ios=", ios
@@ -563,7 +563,7 @@ if( evp_switch .ne. 0 ) then
   do i = 1, ny_evp
    read(11, *, iostat = ios) (rdummy, j = 1, nx_evp)
   enddo
-  if( ios.lt.0 ) exit
+  if( ios.ne.0 ) exit ! modified: gfortran 4.8.5 can return a positive iostat (not just negative/EOF) at true end-of-file for this list-directed read
   tt = tt + 1
  enddo
  tt_max_evp = tt - 1
