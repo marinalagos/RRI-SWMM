@@ -42,7 +42,6 @@ real(8), allocatable :: gampt_ff_idx(:), gampt_f_idx(:)
 
 ! other variable
 integer i, j, t, k, ios, itemp, jtemp, tt, ii, jj
-integer diag_substep_count
 integer out_next
 real(8) out_dt
 real(8) rtemp
@@ -71,8 +70,6 @@ integer kk, l
 !!! STEP 0: FILE NAME AND PARAMETER SETTING
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 call RRI_Read
-write(*,*) "diag checkpoint: after RRI_Read"
-call flush(6)
 
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 !!! STEP 1: FILE READING
@@ -248,23 +245,15 @@ do i = 1, ny
 enddo
 write(*,*) "num_of_cell : ", num_of_cell
 write(*,*) "total area [km2] : ", num_of_cell * area / (10.d0 ** 6.0d0)
-write(*,*) "diag checkpoint: before riv_idx_setting"
-call flush(6)
 
 ! river index setting
 call riv_idx_setting
-write(*,*) "diag checkpoint: after riv_idx_setting, before slo_idx_setting"
-call flush(6)
 
 ! slope index setting
 call slo_idx_setting
-write(*,*) "diag checkpoint: after slo_idx_setting, before dam_read"
-call flush(6)
 
 ! reading dam file
 call dam_read
-write(*,*) "diag checkpoint: after dam_read"
-call flush(6)
 
 ! initial condition
 allocate(hs(ny, nx), hr(ny, nx), hg(ny, nx), gampt_ff(ny, nx))
@@ -513,18 +502,12 @@ open( 11, file = rainfile, status = 'old' )
 tt = 0
 do
  read(11, *, iostat = ios) t, nx_rain, ny_rain
- if(mod(tt,50).eq.0) then
-  write(*,*) "diag rain-count loop: tt=", tt, "ios(header)=", ios, "nx_rain=", nx_rain, "ny_rain=", ny_rain
-  call flush(6)
- endif
  do i = 1, ny_rain
   read(11, *, iostat = ios) (rdummy, j = 1, nx_rain)
  enddo
  if( ios.ne.0 ) exit ! modified: gfortran 4.8.5 can return a positive iostat (not just negative/EOF) at true end-of-file for this list-directed read
  tt = tt + 1
 enddo
-write(*,*) "diag checkpoint: exited rain-count loop, tt=", tt, "ios=", ios
-call flush(6)
 tt_max_rain = tt - 1
 
 allocate( t_rain(0:tt_max_rain), qp(0:tt_max_rain, ny_rain, nx_rain), qp_t(ny, nx) )
@@ -612,13 +595,9 @@ out_dt = max(1.d0, out_dt)
 out_next = nint(out_dt)
 tt = 0
 
-write(*,*) "diag checkpoint: before main time loop"
-call flush(6)
-
 do t = 1, maxt
 
  if(mod(t, 1).eq.0) write(*,*) t, "/", maxt
- call flush(6)
 
  !******* RIVER CALCULATION ******************************
  if( riv_thresh .lt. 0 ) go to 2
@@ -628,7 +607,6 @@ do t = 1, maxt
  ! time step is initially set to be "dt_riv"
  ddt = dt_riv
  ddt_chk_riv = dt_riv
- diag_substep_count = 0
 
  qr_ave = 0.d0
  qr_ave_idx = 0.d0
@@ -717,7 +695,6 @@ do t = 1, maxt
    ddt = max( ddt, ddt_min_riv ) ! added on Jan 7, 2021
    ddt_chk_riv = ddt
    write(*,*) "shrink (riv): ", ddt, errmax, maxloc( vr_err )
-   call flush(6)
    if(ddt.eq.0) stop 'stepsize underflow'
    if(dam_switch .eq. 1 ) dam_vol_temp(:) = 0.d0
    go to 1
@@ -732,11 +709,6 @@ do t = 1, maxt
    time = time + ddt
    vr_idx = vr_temp
    qr_ave_idx = qr_ave_idx + qr_ave_temp_idx
-   diag_substep_count = diag_substep_count + 1
-   if(mod(diag_substep_count, 100).eq.0) then
-    write(*,*) "diag riv substep: ", diag_substep_count, "time=", time, "ddt=", ddt, "errmax=", errmax
-    call flush(6)
-   endif
   endif
   if(time.ge.t * dt) exit ! finish for this timestep
  enddo
