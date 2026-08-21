@@ -71,9 +71,11 @@ integer kk, l
 !!! STEP 0: FILE NAME AND PARAMETER SETTING
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 call RRI_Read
+write(*,*) "diag checkpoint: after RRI_Read"
+call flush(6)
 
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-!!! STEP 1: FILE READING 
+!!! STEP 1: FILE READING
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 ! max timestep
@@ -246,15 +248,23 @@ do i = 1, ny
 enddo
 write(*,*) "num_of_cell : ", num_of_cell
 write(*,*) "total area [km2] : ", num_of_cell * area / (10.d0 ** 6.0d0)
+write(*,*) "diag checkpoint: before riv_idx_setting"
+call flush(6)
 
 ! river index setting
 call riv_idx_setting
+write(*,*) "diag checkpoint: after riv_idx_setting, before slo_idx_setting"
+call flush(6)
 
 ! slope index setting
 call slo_idx_setting
+write(*,*) "diag checkpoint: after slo_idx_setting, before dam_read"
+call flush(6)
 
 ! reading dam file
 call dam_read
+write(*,*) "diag checkpoint: after dam_read"
+call flush(6)
 
 ! initial condition
 allocate(hs(ny, nx), hr(ny, nx), hg(ny, nx), gampt_ff(ny, nx))
@@ -595,6 +605,9 @@ out_dt = dble(maxt) / dble(outnum)
 out_dt = max(1.d0, out_dt)
 out_next = nint(out_dt)
 tt = 0
+
+write(*,*) "diag checkpoint: before main time loop"
+call flush(6)
 
 do t = 1, maxt
 
