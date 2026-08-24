@@ -8,10 +8,34 @@ Data sources:
 - RRI-SWMM (coupled): SWMM_model/model.out
 """
 
+import argparse
 from pathlib import Path
 import pandas as pd
 import matplotlib.pyplot as plt
 from swmmtoolbox import swmmtoolbox as stb
+
+# --- LANGUAGE ---
+
+TEXT = {
+    'en': {
+        'observed': 'Observed',
+        'ylabel': 'Water level [m]',
+        'xlabel': 'Date',
+        'suptitle': 'Observed vs simulated water level (SWMM 5.2 vs RRI-SWMM)',
+    },
+    'es': {
+        'observed': 'Observado',
+        'ylabel': 'Nivel de agua [m]',
+        'xlabel': 'Fecha',
+        'suptitle': 'Nivel de agua observado vs simulado (SWMM 5.2 vs RRI-SWMM)',
+    },
+}
+
+parser = argparse.ArgumentParser(description=__doc__)
+parser.add_argument('--lang', choices=TEXT.keys(), default='en',
+                     help='Language for plot text (default: en)')
+args = parser.parse_args()
+text = TEXT[args.lang]
 
 # --- CONFIG ---
 
@@ -114,18 +138,19 @@ for ax, sensor_key in zip(axes, sensors):
         ax.plot(data['rri_swmm'], label='RRI-SWMM', color='tab:orange', linewidth=1.5)
     if data['swmm52'] is not None:
         ax.plot(data['swmm52'], label='SWMM 5.2', color='tab:blue', linewidth=1.5)
-    ax.plot(data['obs'], label='Observed', color='black', linewidth=1.2,
-             linestyle='--', marker='.', markersize=3)
+    ax.plot(data['obs'], label=text['observed'], color='dimgray', linewidth=1.2,
+             linestyle='-')
 
     ax.set_title(info['label'])
-    ax.set_ylabel('Water level [m]')
+    ax.set_ylabel(text['ylabel'])
     ax.grid(alpha=0.3)
     ax.legend(loc='upper right')
 
-axes[-1].set_xlabel('Date')
-fig.suptitle('Observed vs simulated water level (SWMM 5.2 vs RRI-SWMM)', fontsize=13)
+axes[-1].set_xlabel(text['xlabel'])
+fig.suptitle(text['suptitle'], fontsize=13)
 fig.tight_layout()
 
-out_file = 'water_levels_comparison.png'
+suffix = '' if args.lang == 'en' else f'_{args.lang}'
+out_file = f'water_levels_comparison{suffix}.png'
 fig.savefig(out_file, dpi=150)
 print(f"\nSaved: {out_file}")
