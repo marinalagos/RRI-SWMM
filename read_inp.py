@@ -64,7 +64,7 @@ def inp2df(inpfile, subcatchments=False, junctions=False, storage=False, conduit
             skip1 = general_dict[object]['ini'] + 2
             skip2 = last_line - general_dict[object]['fin']
             df_object = pd.read_csv(inpfile,
-                                    sep='\s+',
+                                    sep=r'\s+',
                                     skiprows=skip1, 
                                     skipfooter=skip2,
                                     header=None,
