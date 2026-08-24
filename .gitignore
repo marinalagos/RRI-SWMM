@@ -9,6 +9,12 @@ benchmark/model.out
 benchmark/model*.rpt
 water_levels_comparison*.png
 debug_cluster/
+*_threads*.inp
+SWMM_model/model_threads2.out
+SWMM_model/model_threads2.rpt
+SWMM_model/fair_model*.rpt
+benchmark/model_threads2.out
+benchmark/fair_model*.rpt
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

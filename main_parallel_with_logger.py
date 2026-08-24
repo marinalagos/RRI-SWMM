@@ -1,5 +1,6 @@
 from helper_functions import get_associated_lengths, get_hs_vector, compute_nodes_inflows, update_hs_raster, read_ascii_raster_no_data, write_hs_grid, read_hs_grid
 from pathlib import Path
+import argparse
 import platform
 import pandas as pd
 import shutil
@@ -12,6 +13,13 @@ import numpy as np
 
 ENABLE_LOGGING = True  # Cambiar a False para ejecutar con subprocess.DEVNULL sin logs a disco
 
+arg_parser = argparse.ArgumentParser()
+arg_parser.add_argument('--swmm-model-name', default='model',
+                         help="Base name (without extension) of the .inp/.rpt/.out files "
+                              "in SWMM_model/, e.g. 'model_threads2' to use "
+                              "SWMM_model/model_threads2.inp (default: 'model')")
+cli_args = arg_parser.parse_args()
+
 time_step = '10min' # RRI input file must match with this (e.g., time_step='10m' -> lasth = 0.166667, outnum = 1)
 time_step_seconds = pd.Timedelta(time_step).seconds
 
@@ -20,7 +28,7 @@ out_path = hist_path / 'out'
 out_path.mkdir(parents=True, exist_ok=True)
 
 SWMM_model_path = Path('./SWMM_model/')
-SWMM_model_name = 'model'
+SWMM_model_name = cli_args.swmm_model_name
 
 RRI_model_path = Path('./RRI_model/')
 RRI_exe_name = '0_rri_1_4_2_7.exe' if platform.system() == 'Windows' else '0_rri_1_4_2_7'
