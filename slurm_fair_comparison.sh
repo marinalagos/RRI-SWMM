@@ -72,13 +72,13 @@ echo "-------------------------------------------"
 for i in $(seq 1 11); do
     echo "--- Iteración $i ---"
 
-    echo -n "RRI-SWMM: "
-    echo "$(date)"
-    ejecutar_rriswmm
-
     echo -n "SWMM: 5.2"
     echo "$(date)"
     ejecutar_swmm
+
+    echo -n "RRI-SWMM: "
+    echo "$(date)"
+    ejecutar_rriswmm
 done
 
 echo "-------------------------------------------"
