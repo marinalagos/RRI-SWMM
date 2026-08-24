@@ -51,7 +51,7 @@ ejecutar_rriswmm() {
 ejecutar_swmm() {
     cd benchmark/
     rm -f model_threads2.out
-    srun --cpus-per-task=2 --cpu-bind=cores swmm5 model_threads2.inp "fair_model${i}.rpt" model_threads2.out
+    srun --cpus-per-task=2 --cpu-bind=cores ./runswmm model_threads2.inp "fair_model${i}.rpt" model_threads2.out
     cd ..
 
     echo "==========================================="
