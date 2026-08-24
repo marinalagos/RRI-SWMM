@@ -54,7 +54,12 @@ ejecutar_swmm() {
     # OMP_NUM_THREADS is 1 for the whole script (so RRI stays single-threaded);
     # override it here so SWMM's own OpenMP routing can actually use 2 threads,
     # matching the THREADS=2 requested in model_threads2.inp.
-    srun --cpus-per-task=2 --cpu-bind=cores --export=ALL,OMP_NUM_THREADS=2 ./runswmm model_threads2.inp "fair_model${i}.rpt" model_threads2.out
+    # Set it via `env` on the remote process itself, rather than `srun --export`:
+    # for job steps nested inside an sbatch allocation, --export's precedence vs.
+    # the already-exported OMP_NUM_THREADS=1 is inconsistent across Slurm versions
+    # (confirmed on this cluster: --export=ALL,OMP_NUM_THREADS=2 was silently
+    # ignored, ps -T and /proc/<pid>/environ both still showed 1 thread / OMP=1).
+    srun --cpus-per-task=2 --cpu-bind=cores env OMP_NUM_THREADS=2 ./runswmm model_threads2.inp "fair_model${i}.rpt" model_threads2.out
     cd ..
 
     echo "==========================================="
