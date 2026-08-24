@@ -51,7 +51,10 @@ ejecutar_rriswmm() {
 ejecutar_swmm() {
     cd benchmark/
     rm -f model_threads2.out
-    srun --cpus-per-task=2 --cpu-bind=cores ./runswmm model_threads2.inp "fair_model${i}.rpt" model_threads2.out
+    # OMP_NUM_THREADS is 1 for the whole script (so RRI stays single-threaded);
+    # override it here so SWMM's own OpenMP routing can actually use 2 threads,
+    # matching the THREADS=2 requested in model_threads2.inp.
+    srun --cpus-per-task=2 --cpu-bind=cores --export=ALL,OMP_NUM_THREADS=2 ./runswmm model_threads2.inp "fair_model${i}.rpt" model_threads2.out
     cd ..
 
     echo "==========================================="
