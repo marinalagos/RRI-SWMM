@@ -5,6 +5,9 @@ SWMM_model/model.out
 SWMM_model/model.rpt
 SWMM_model/back_resultados/
 swmm524_engine
+benchmark/model.out
+benchmark/model*.rpt
+water_levels_comparison.png
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
