@@ -15,6 +15,10 @@ SWMM_model/model_threads2.rpt
 SWMM_model/fair_model*.rpt
 benchmark/model_threads2.out
 benchmark/fair_model*.rpt
+benchmark/model_threads1.out
+benchmark/3way_swmm2cpu*.rpt
+benchmark/3way_swmm1cpu*.rpt
+SWMM_model/3way_rriswmm*.rpt
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
