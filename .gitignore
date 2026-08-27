@@ -19,6 +19,7 @@ benchmark/model_threads1.out
 benchmark/3way_swmm2cpu*.rpt
 benchmark/3way_swmm1cpu*.rpt
 SWMM_model/3way_rriswmm*.rpt
+docs/benchmark_report.html
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
