@@ -1,6 +1,6 @@
 # RRI-SWMM
 
-Coupling between [RRI](http://rri-model.info/) (Rainfall-Runoff-Inundation), a
+Coupling between [RRI](https://www.pwri.go.jp/icharm/research/rri/rri_top.html) (Rainfall-Runoff-Inundation), a
 2D surface runoff and inundation model, and [SWMM](https://www.epa.gov/water-research/storm-water-management-model-swmm)
 (Storm Water Management Model), which simulates the piped/open-channel
 drainage network. The two models exchange water at each coupling time step:
